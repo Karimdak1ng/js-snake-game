@@ -1,16 +1,21 @@
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-var canvasWidth = 302;
-var canvasHeight = 152;
-var cellSize = 10;
-var numCellsWidth = Math.floor(canvasWidth / cellSize);
-var numCellsHeight = Math.floor(canvasHeight / cellSize);
-var snakeX = [10];
-var snakeY = [10];
-var speedX = 0;
-var speedY = 0;
-var foodX = Math.floor(Math.random() * numCellsWidth);
-var foodY = Math.floor(Math.random() * numCellsHeight);
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const canvasWidth = 302;
+const canvasHeight = 152;
+const cellSize = 10;
+const numCellsWidth = Math.floor(canvasWidth / cellSize);
+const numCellsHeight = Math.floor(canvasHeight / cellSize);
+let snakeX = [10];
+let snakeY = [10];
+let speedX = 0;
+let speedY = 0;
+let foodX = 0;
+let foodY = 0;
+
+function init() {
+    foodX = Math.floor(Math.random() * numCellsWidth);
+    foodY = Math.floor(Math.random() * numCellsHeight);
+}
 
 function drawFood() {
     ctx.fillStyle = "#FF0000";
@@ -19,8 +24,17 @@ function drawFood() {
 
 function drawSnake() {
     ctx.fillStyle = "#000000";
-    for (var i = 0; i < snakeX.length; i++) {
+    for (let i = 0; i < snakeX.length; i++) {
         ctx.fillRect(snakeX[i] * cellSize, snakeY[i] * cellSize, cellSize, cellSize);
+    }
+}
+
+function checkCollision() {
+    if (snakeX[0] < 0 || snakeX[0] >= numCellsWidth || snakeY[0] < 0 || snakeY[0] >= numCellsHeight || snakeX.slice(1).includes(snakeX[0]) && snakeY.slice(1).includes(snakeY[0])) {
+        snakeX = [10];
+        snakeY = [10];
+        speedX = 0;
+        speedY = 0;
     }
 }
 
@@ -42,10 +56,11 @@ function drawGame() {
     snakeX.pop();
     snakeY.pop();
 
+    checkCollision();
     drawSnake();
 }
 
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", (event) => {
     switch (event.keyCode) {
         case 37: // left arrow
             if (speedX !== 1) {
@@ -76,7 +91,8 @@ document.addEventListener("keydown", function (event) {
 
 function runGame() {
     drawGame();
-    setTimeout(runGame, 50);
+    setTimeout(runGame, 55);
 }
 
+init();
 runGame();
