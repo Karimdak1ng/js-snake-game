@@ -48,20 +48,28 @@ function drawGame() {
 document.addEventListener("keydown", function (event) {
     switch (event.keyCode) {
         case 37: // left arrow
-            speedX = -1;
-            speedY = 0;
+            if (speedX !== 1) {
+                speedX = -1;
+                speedY = 0;
+            }
             break;
         case 38: // up arrow
-            speedX = 0;
-            speedY = -1;
+            if (speedY !== 1) {
+                speedX = 0;
+                speedY = -1;
+            }
             break;
         case 39: // right arrow
-            speedX = 1;
-            speedY = 0;
+            if (speedX !== -1) {
+                speedX = 1;
+                speedY = 0;
+            }
             break;
         case 40: // down arrow
-            speedX = 0;
-            speedY = 1;
+            if (speedY !== -1) {
+                speedX = 0;
+                speedY = 1;
+            }
             break;
     }
 });
