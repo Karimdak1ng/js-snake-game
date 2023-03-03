@@ -91,7 +91,7 @@ document.addEventListener("keydown", (event) => {
 
 function runGame() {
     drawGame();
-    setTimeout(runGame, 55);
+    setTimeout(runGame, 85);
 }
 
 init();
